@@ -13,7 +13,6 @@ yarn-error.log*
 # OS files
 .DS_Store
 Thumbs.db
-
-# build (if later you build frontend)
+ 
 dist/
 build/
