@@ -1,0 +1,204 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@layer base {
+  :root {
+    --background: 220 20% 97%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    --primary: 221 83% 53%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 222 47% 11%;
+
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
+
+    --accent: 142 71% 45%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 221 83% 53%;
+
+    --radius: 0.75rem;
+
+    --chat-bubble-self: 221 83% 53%;
+    --chat-bubble-self-foreground: 0 0% 100%;
+    --chat-bubble-other: 220 14% 96%;
+    --chat-bubble-other-foreground: 222 47% 11%;
+    --chat-system: 220 9% 46%;
+    --online-indicator: 142 71% 45%;
+  }
+
+  .dark {
+    --background: 222 47% 8%;
+    --foreground: 210 40% 98%;
+
+    --card: 222 47% 11%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 217 91% 60%;
+    --primary-foreground: 222 47% 8%;
+
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 142 71% 45%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
+    --ring: 217 91% 60%;
+
+    --chat-bubble-self: 217 91% 60%;
+    --chat-bubble-self-foreground: 0 0% 100%;
+    --chat-bubble-other: 217 33% 17%;
+    --chat-bubble-other-foreground: 210 40% 98%;
+    --chat-system: 215 20% 65%;
+    --online-indicator: 142 71% 45%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+}
+
+@layer components {
+  .chat-container {
+    @apply min-h-screen bg-background flex;
+  }
+
+  .sidebar {
+    @apply w-64 bg-card border-r border-border flex flex-col;
+  }
+
+  .sidebar-header {
+    @apply p-4 border-b border-border;
+  }
+
+  .sidebar-title {
+    @apply text-sm font-semibold text-muted-foreground uppercase tracking-wide;
+  }
+
+  .users-list {
+    @apply flex-1 p-2 space-y-1 overflow-y-auto;
+  }
+
+  .user-item {
+    @apply flex items-center gap-3 px-3 py-2 rounded-lg text-foreground hover:bg-secondary transition-colors;
+  }
+
+  .online-dot {
+    @apply w-2 h-2 rounded-full bg-[hsl(var(--online-indicator))];
+  }
+
+  .chat-main {
+    @apply flex-1 flex flex-col;
+  }
+
+  .chat-header {
+    @apply h-16 bg-card border-b border-border flex items-center justify-between px-6;
+  }
+
+  .room-title {
+    @apply text-lg font-semibold text-foreground;
+  }
+
+  .messages-container {
+    @apply flex-1 overflow-y-auto p-6 space-y-4;
+  }
+
+  .message {
+    @apply max-w-[70%] px-4 py-2 rounded-2xl;
+  }
+
+  .message-self {
+    @apply ml-auto bg-[hsl(var(--chat-bubble-self))] text-[hsl(var(--chat-bubble-self-foreground))] rounded-br-md;
+  }
+
+  .message-other {
+    @apply bg-[hsl(var(--chat-bubble-other))] text-[hsl(var(--chat-bubble-other-foreground))] rounded-bl-md;
+  }
+
+  .message-system {
+    @apply text-center text-sm text-[hsl(var(--chat-system))] italic max-w-full bg-transparent;
+  }
+
+  .message-user {
+    @apply text-xs font-medium opacity-70 mb-1;
+  }
+
+  .typing-indicator {
+    @apply text-sm text-[hsl(var(--chat-system))] italic px-6 h-6;
+  }
+
+  .chat-input-container {
+    @apply p-4 bg-card border-t border-border;
+  }
+
+  .chat-form {
+    @apply flex gap-3;
+  }
+
+  .chat-input {
+    @apply flex-1 px-4 py-3 bg-secondary text-foreground rounded-xl border-0 outline-none focus:ring-2 focus:ring-[hsl(var(--ring))] transition-shadow placeholder:text-muted-foreground;
+  }
+
+  .send-btn {
+    @apply px-6 py-3 bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))] font-medium rounded-xl hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .leave-btn {
+    @apply px-4 py-2 text-sm font-medium text-destructive hover:bg-destructive/10 rounded-lg transition-colors;
+  }
+
+  .join-overlay {
+    @apply fixed inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center z-50;
+  }
+
+  .join-card {
+    @apply bg-card p-8 rounded-2xl shadow-2xl border border-border w-full max-w-md mx-4;
+  }
+
+  .join-title {
+    @apply text-2xl font-bold text-foreground text-center mb-6;
+  }
+
+  .join-input {
+    @apply w-full px-4 py-3 bg-secondary text-foreground rounded-xl border-0 outline-none focus:ring-2 focus:ring-[hsl(var(--ring))] transition-shadow placeholder:text-muted-foreground mb-4;
+  }
+
+  .join-btn {
+    @apply w-full px-6 py-3 bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))] font-semibold rounded-xl hover:opacity-90 transition-opacity;
+  }
+}
