@@ -6,8 +6,8 @@ let currentCallUser = null;
 window.currentCallUser = null;
 let pendingCandidates = [];
 let inCall = false;
-let localVideoEl = null;
-let remoteVideoEl = null;
+const localVideoEl = document.getElementById("localVideo");
+const remoteVideoEl = document.getElementById("remoteVideo");
 
 const videoArea = document.getElementById("video-area");
 
@@ -61,12 +61,15 @@ async function startMedia() {
     audio: true,
   });
 
-  localVideoEl = document.createElement("video");
-  localVideoEl.autoplay = true;
-  localVideoEl.muted = true;
-  localVideoEl.playsInline = true;
+  // localVideoEl = document.createElement("video");
+  // localVideoEl.autoplay = true;
+ 
+  // localVideoEl.playsInline = true;
   localVideoEl.srcObject = localStream;
-
+  localVideoEl.muted = true;
+  localVideoEl.onloadedmetadata = () => {
+  localVideoEl.play().catch(() => {});
+};
   localVideoEl.className =
     "w-40 h-32 object-cover rounded-xl border-2 border-white absolute bottom-4 right-4 shadow-lg";
 
@@ -84,20 +87,23 @@ function createPC() {
   }
 
   pc.ontrack = (e) => {
-    if (!remoteVideoEl) {
-      remoteVideoEl = document.createElement("video");
-      remoteVideoEl.autoplay = true;
-      remoteVideoEl.playsInline = true;
-      remoteVideoEl.className = "w-full h-full object-cover";
+  //   if (!remoteVideoEl) {
+  //     remoteVideoEl = document.createElement("video");
+  //     remoteVideoEl.autoplay = true;
+  //     remoteVideoEl.playsInline = true;
+  //     remoteVideoEl.className = "w-full h-full object-cover";
 
-      videoArea.appendChild(remoteVideoEl);
-    }
-   remoteVideoEl.srcObject = e.streams[0];
+  //     videoArea.appendChild(remoteVideoEl);
+  //   }
+  //  remoteVideoEl.srcObject = e.streams[0];
+  remoteVideoEl.srcObject = e.streams[0];
+ 
 remoteVideoEl.muted = false;
-
-remoteVideoEl.play().catch(err => {
-  console.log("Autoplay blocked:", err);
-});
+remoteVideoEl.onloadedmetadata = () => {
+  remoteVideoEl.play().catch(() => {
+    console.log("Autoplay blocked — waiting for user gesture");
+  });
+};
   };
 
   pc.onicecandidate = (e) => {
@@ -163,18 +169,19 @@ function endCall() {
     localStream = null;
   }
 
-  if (localVideoEl) {
-    localVideoEl.srcObject = null;
-    localVideoEl.remove();
-    localVideoEl = null;
-  }
+  // if (localVideoEl) {
+  //   localVideoEl.srcObject = null;
+  //   localVideoEl.remove();
+  //   localVideoEl = null;
+  // }
 
-  if (remoteVideoEl) {
-    remoteVideoEl.srcObject = null;
-    remoteVideoEl.remove();
-    remoteVideoEl = null;
-  }
-
+  // if (remoteVideoEl) {
+  //   remoteVideoEl.srcObject = null;
+  //   remoteVideoEl.remove();
+  //   remoteVideoEl = null;
+  // }
+localVideoEl.srcObject = null;
+remoteVideoEl.srcObject = null;
   currentCallUser = null;
   window.currentCallUser = null;
   pendingCandidates = [];

@@ -111,7 +111,7 @@
   <div id="chat-app" class="hidden min-h-screen bg-background flex">
     
     <!-- Video Call Area -->
-    <div id="video-area" class="hidden relative flex-1 bg-black">
+    <div id="video-area" class="hidden fixed inset-0 z-[100] bg-black">
       <div id="callingOverlay" class="absolute inset-0 bg-black/70 flex items-center justify-center text-white text-xl hidden z-40">
         <div class="flex flex-col items-center gap-4">
           <div class="w-16 h-16 border-4 border-white/30 border-t-white rounded-full animate-spin"></div>
@@ -124,6 +124,13 @@
       </div>
       
       <!-- Video Controls -->
+       <!-- Remote video - full screen background -->
+      <video id="remoteVideo" class="w-full h-full object-cover" autoplay playsinline></video>
+
+      <!-- Local video (small) - responsive positioning -->
+      <video id="localVideo" class="absolute bottom-20 right-4 w-28 h-20 sm:w-40 sm:h-28 sm:bottom-4 object-cover rounded-xl border-2 border-white shadow-lg z-50" autoplay muted playsinline></video>
+
+      <!-- Video Controls - above local video on mobile -->
       <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-4 z-50">
         <button id="muteBtn" class="w-12 h-12 bg-gray-700/80 hover:bg-gray-600 text-white rounded-full flex items-center justify-center transition-colors">
           🎤
@@ -133,11 +140,11 @@
         </button>
       </div>
 
-      <!-- Remote video -->
+      <!-- Remote video
       <video id="remoteVideo" class="absolute inset-0 w-full h-full object-cover" autoplay playsinline></video>
 
-      <!-- Local video (small) -->
-      <video id="localVideo" class="absolute bottom-4 right-4 w-40 h-28 object-cover rounded-xl border-2 border-white shadow-lg" autoplay muted playsinline></video>
+      Local video (small)
+      <video id="localVideo" class="absolute bottom-4 right-4 w-40 h-28 object-cover rounded-xl border-2 border-white shadow-lg" autoplay muted playsinline></video> -->
 
       <button id="endCallBtn" class="absolute top-4 right-4 bg-destructive hover:bg-destructive/90 text-white px-4 py-2 rounded-xl z-50 flex items-center gap-2 transition-colors">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
